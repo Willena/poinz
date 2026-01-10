@@ -1,11 +1,28 @@
 import {getItem, persistOnStateChange} from '../clientSettingsStore';
 import {COMMAND_SENT, JOIN_PROPERTIES_ADDED} from '../actions/commandActions';
 import {EVENT_ACTION_TYPES} from '../actions/eventActions';
+import {getCookie} from '../../services/cookie-utils.js';
+import {getCurrentUser} from '../../services/restApi/whoAmIService.js';
 
 const PRESET_USER_NAME = 'presetUserName';
 const PRESET_EMAIL = 'presetEmail';
 const PRESET_AVATAR = 'presetAvatar';
 const PRESET_USER_ID = 'presetUserId';
+
+const getInitialUsername = () => {
+
+  const apiUser = getCurrentUser()
+  if (apiUser) {
+    return apiUser
+  }
+
+  const cookieUsername = getCookie('poinz_username');
+  if (cookieUsername) {
+    return decodeURIComponent(cookieUsername);
+  }
+
+  return getItem(PRESET_USER_NAME);
+};
 
 /**
  * Will contain data during the joinRoom workflow
@@ -15,7 +32,7 @@ export const joiningInitialState = {
   roomId: undefined,
   userdata: {
     avatar: parseInt(getItem(PRESET_AVATAR) || 0, 10),
-    username: getItem(PRESET_USER_NAME),
+    username: getInitialUsername(),
     userId: getItem(PRESET_USER_ID),
     email: getItem(PRESET_EMAIL)
   },
