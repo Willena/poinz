@@ -1,8 +1,6 @@
 import {getItem, persistOnStateChange} from '../clientSettingsStore';
 import {COMMAND_SENT, JOIN_PROPERTIES_ADDED} from '../actions/commandActions';
 import {EVENT_ACTION_TYPES} from '../actions/eventActions';
-import {getCookie} from '../../services/cookie-utils.js';
-import {getCurrentUser} from '../../services/restApi/whoAmIService.js';
 
 const PRESET_USER_NAME = 'presetUserName';
 const PRESET_EMAIL = 'presetEmail';
@@ -11,15 +9,6 @@ const PRESET_USER_ID = 'presetUserId';
 
 export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
 
-
-const getInitialUsername = () => {
-  const cookieUsername = getCookie('poinz_username');
-  if (cookieUsername) {
-    return decodeURIComponent(cookieUsername);
-  }
-
-  return getItem(PRESET_USER_NAME);
-};
 
 /**
  * Will contain data during the joinRoom workflow
@@ -54,6 +43,7 @@ export default function joiningReducer(state = joiningInitialState, action, ownU
 
   switch (action.type) {
     case SET_AUTHENTICATED_USER: {
+      console.log('action',state, action, ownUserId);
       return {
         ...state,
         userdata: {
@@ -62,6 +52,7 @@ export default function joiningReducer(state = joiningInitialState, action, ownU
         }
       };
     }
+
     case JOIN_PROPERTIES_ADDED: {
       return {
         ...state,
