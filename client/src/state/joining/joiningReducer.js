@@ -18,7 +18,7 @@ export const joiningInitialState = {
   roomId: undefined,
   userdata: {
     avatar: parseInt(getItem(PRESET_AVATAR) || 0, 10),
-    username: getInitialUsername(),
+    username: getItem(PRESET_USER_NAME),
     userId: getItem(PRESET_USER_ID),
     email: getItem(PRESET_EMAIL)
   },

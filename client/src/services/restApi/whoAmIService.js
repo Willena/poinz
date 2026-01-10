@@ -4,6 +4,7 @@
  */
 import checkStatusCode from './checkStatusCode';
 import {getCookie} from '../cookie-utils.js';
+import {getItem} from '../../state/clientSettingsStore.js';
 
 /**
  * @return {Promise<string | null>}
@@ -21,6 +22,6 @@ export function getCurrentUser() {
       if (cookieUsername) {
         return decodeURIComponent(cookieUsername);
       }
-      return getItem(PRESET_USER_NAME);
+      return null;
     });
 }
