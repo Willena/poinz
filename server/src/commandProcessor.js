@@ -63,7 +63,7 @@ export default function commandProcessorFactory(
    *  @param {string} userId The id of the user that sent the command
    *  @returns {Promise<object[]>} Promise that resolves to a list of events that were produced by this command. (they are already applied to the room state)
    */
-  return function processCommand(command, userId) {
+  return function processCommand(command, userId, authenticatedUser) {
     if (!userId) {
       throw new Error('Fatal! socketServer has to provide userId!');
     }
@@ -75,7 +75,7 @@ export default function commandProcessorFactory(
      * This is why we push incoming commands into a queue. Commands will be handled in sequence.
      */
     return new Promise((resolve, reject) =>
-      queue.push({command, userId}, (err, result) => {
+      queue.push({command, userId, authenticatedUser}, (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -92,10 +92,10 @@ export default function commandProcessorFactory(
    * @param {function} proceed function to proceed the queue (handle the next job/command)
    */
   async function jobHandler(job, proceed) {
-    const {userId} = job;
+    const {userId, authenticatedUser} = job;
     const command = sanitizeRoomId(job.command);
 
-    const context = {userId};
+    const context = {userId,authenticatedUser };
 
     logCommand(command, userId);
 
@@ -249,7 +249,7 @@ export default function commandProcessorFactory(
     }
 
     // invoke the command handler function
-    ctx.handler.fn(pushEvent, ctx.room, cmd, ctx.userId);
+    ctx.handler.fn(pushEvent, ctx.room, cmd, ctx.userId, ctx.authenticatedUser);
   }
 
   /**

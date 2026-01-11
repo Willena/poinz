@@ -1,0 +1,26 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+  poinz:
+    image: poinz
+    environment:
+      NODE_ENV: dev
+      X_USERNAME_HEADER: "X-Forwarded-Preferred-Username"
+    ports:
+      - 3000:3000
+  oauth2-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
+    ports:
+      - "4180:4180"
+    volumes:
+      - ./oauth2-proxy.cfg:/etc/oauth2-proxy.cfg
+    command:
+      - --config=/etc/oauth2-proxy.cfg
+      - --pass-user-headers
+      - --insecure-oidc-allow-unverified-email

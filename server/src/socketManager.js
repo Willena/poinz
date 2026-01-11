@@ -31,7 +31,7 @@ export default function socketManagerFactory(store, sendEventToRoom, removeSocke
   async function handleIncomingCommand(socket, msg) {
     try {
       const userId = getUserIdForMessage(socket.id, msg);
-      const {producedEvents} = await commandProcessor(msg, userId);
+      const {producedEvents} = await commandProcessor(msg, userId, socket.authenticatedUser);
 
       if (!producedEvents || producedEvents.length < 1) {
         return;

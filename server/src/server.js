@@ -24,6 +24,15 @@ async function startup() {
   const store = await roomsStoreFactory(settings.persistentStore);
   const app = express();
 
+  // Middleware to capture X-Username header from OAuth Proxy
+  app.use((req, res, next) => {
+    const xUser = req.get(process.env.X_USERNAME_HEADER || 'X-Auth-Username');
+    if (xUser) {
+      req.authenticatedUser = xUser;
+    }
+    next();
+  });
+
   if (process.env.NODE_ENV === 'production') {
     LOGGER.info('enabling HTTPS enforce...');
     app.use(sslifyEnforce.HTTPS({trustProtoHeader: true}));

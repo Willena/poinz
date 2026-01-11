@@ -1,4 +1,4 @@
-import {Provider} from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 import log from 'loglevel';
 
 import 'purecss';
@@ -15,12 +15,20 @@ import Main from './components/Main';
 import {usePostHogIdentify} from './hooks/usePostHogIdentify';
 
 import GlobalStyle from './_styled';
+import {useEffect} from 'react';
+import {fetchWhoAmI} from './state/actions/uiStateActions';
 
 log.setLevel(appConfig.env === 'dev' ? 'debug' : 'error');
 const store = configureStore(initialState());
 
 function AppContent() {
+  const dispatch = useDispatch();
   usePostHogIdentify();
+
+  useEffect(() => {
+    fetchWhoAmI(dispatch)
+  }, [dispatch]);
+
   return (
     <>
       <GlobalStyle />

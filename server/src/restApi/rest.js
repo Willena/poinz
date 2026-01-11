@@ -24,6 +24,12 @@ export default function restApiFactory(app, store) {
 
   app.use('/api', restRouter);
 
+  restRouter.get('/whoami', (req, res) => {
+    res.json({
+      username: req.authenticatedUser || null
+    });
+  });
+
   restRouter.get('/status', async (req, res) => {
     // normalize query parameters
     let normalizedLimit = req.query.limit && parseInt(req.query.limit, 10);

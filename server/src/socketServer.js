@@ -30,6 +30,11 @@ function init(httpServer, store) {
   const rateLimiter = process.env.NODE_ENV === 'production' ? initCommandRateLimiter() : () => ({});
 
   io.on('connect', (socket) => {
+    const xUser = socket.request.headers[process.env.X_USERNAME_HEADER || 'X-Auth-Username'];
+    if (xUser) {
+      socket.authenticatedUser = xUser;
+    }
+
     socket.on('disconnect', () => socketManager.onDisconnect(socket));
     socket.on('command', async (msg) => {
       await rateLimiter(socket.id);

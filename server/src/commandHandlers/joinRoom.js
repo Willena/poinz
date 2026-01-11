@@ -60,7 +60,11 @@ const joinRoomCommandHandler = {
   canCreateRoom: true, // set to true -> this command is allowed to create a new room object. see commandProcessor:loadRoom() for more information
   skipUserIdRoomCheck: true, // set to true -> will not check whether userId is part of the room. see commandProcessor:preConditions() for more information
   schema,
-  fn: (pushEvent, room, command, userId) => {
+  fn: (pushEvent, room, command, userId, authenticatedUser) => {
+    if (authenticatedUser && authenticatedUser !== command.payload.username) {
+      command.payload.username = authenticatedUser;
+    }
+    
     if (room.pristine) {
       joinNewRoom(pushEvent, room, command, userId);
     } else {

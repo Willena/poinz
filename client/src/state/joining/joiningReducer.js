@@ -7,6 +7,9 @@ const PRESET_EMAIL = 'presetEmail';
 const PRESET_AVATAR = 'presetAvatar';
 const PRESET_USER_ID = 'presetUserId';
 
+export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
+
+
 /**
  * Will contain data during the joinRoom workflow
  * Data is needed during/in-between these views: from landing page & join room form to "who are you" (username) to password prompt
@@ -39,6 +42,16 @@ export default function joiningReducer(state = joiningInitialState, action, ownU
   const {event} = action;
 
   switch (action.type) {
+    case SET_AUTHENTICATED_USER: {
+      return {
+        ...state,
+        userdata: {
+          ...state.userdata,
+          username: action.username || state.userdata.username,
+        }
+      };
+    }
+
     case JOIN_PROPERTIES_ADDED: {
       return {
         ...state,

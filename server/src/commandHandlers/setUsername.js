@@ -27,7 +27,11 @@ const schema = {
 
 const setUsernameCommandHandler = {
   schema,
-  fn: (pushEvent, room, command) => {
+  fn: (pushEvent, room, command, userId, authenticatedUser) => {
+    if (authenticatedUser && authenticatedUser !== command.payload.username) {
+      return;
+      //throw new Error('Cannot change username when authenticated via proxy');
+    }
     pushEvent('usernameSet', command.payload);
   }
 };
