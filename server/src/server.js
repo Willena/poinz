@@ -26,7 +26,7 @@ async function startup() {
 
   // Middleware to capture X-Username header from OAuth Proxy
   app.use((req, res, next) => {
-    const xUser = req.get('X-Username');
+    const xUser = req.get(process.env.X_USERNAME_HEADER || 'X-Auth-Username');
     if (xUser) {
       req.authenticatedUser = xUser;
     }

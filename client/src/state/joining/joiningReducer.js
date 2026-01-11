@@ -43,7 +43,6 @@ export default function joiningReducer(state = joiningInitialState, action, ownU
 
   switch (action.type) {
     case SET_AUTHENTICATED_USER: {
-      console.log('action',state, action, ownUserId);
       return {
         ...state,
         userdata: {

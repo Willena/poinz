@@ -30,7 +30,7 @@ function init(httpServer, store) {
   const rateLimiter = process.env.NODE_ENV === 'production' ? initCommandRateLimiter() : () => ({});
 
   io.on('connect', (socket) => {
-    const xUser = socket.request.headers['X-Username'];
+    const xUser = socket.request.headers[process.env.X_USERNAME_HEADER || 'X-Auth-Username'];
     if (xUser) {
       socket.authenticatedUser = xUser;
     }
