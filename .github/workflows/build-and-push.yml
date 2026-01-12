@@ -71,7 +71,7 @@ jobs:
         run: |
           DOCKER_USER="${DOCKER_USERNAME,,}"
           BASE_TAG="$DOCKER_REGISTRY/$DOCKER_USER/poinz"
-          
+
           # Build with all tags
           TAGS_ARG="-t $BASE_TAG:latest"
           if [ ! -z "${{ steps.git-info.outputs.tags }}" ]; then
@@ -79,8 +79,28 @@ jobs:
               TAGS_ARG="$TAGS_ARG -t $BASE_TAG:$tag"
             done
           fi
-          
+
           echo "Building docker image for commit ${{ steps.git-info.outputs.hash }} on branch ${{ steps.git-info.outputs.branch }}"
+          docker build $TAGS_ARG --network=host .
+
+      - name: Build and tag Docker image (bot)
+        env:
+          DOCKER_REGISTRY: ghcr.io
+          DOCKER_USERNAME: ${{ github.repository_owner }}
+        run: |
+          DOCKER_USER="${DOCKER_USERNAME,,}"
+          BASE_TAG="$DOCKER_REGISTRY/$DOCKER_USER/poinz-jira-bot"
+
+          # Build with all tags
+          TAGS_ARG="-t $BASE_TAG:latest"
+          if [ ! -z "${{ steps.git-info.outputs.tags }}" ]; then
+            for tag in ${{ steps.git-info.outputs.tags }}; do
+              TAGS_ARG="$TAGS_ARG -t $BASE_TAG:$tag"
+            done
+          fi
+
+          echo "Building docker image for commit ${{ steps.git-info.outputs.hash }} on branch ${{ steps.git-info.outputs.branch }}"
+          cd bot-sdk
           docker build $TAGS_ARG --network=host .
 
       - name: Push Docker image
@@ -88,4 +108,5 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ github.repository_owner }}
         run: |
-          docker image push --all-tags "ghcr.io/${DOCKER_USERNAME,,}/poinz" 
+          docker image push --all-tags "ghcr.io/${DOCKER_USERNAME,,}/poinz"
+          docker image push --all-tags "ghcr.io/${DOCKER_USERNAME,,}/poinz-jira-bot"
