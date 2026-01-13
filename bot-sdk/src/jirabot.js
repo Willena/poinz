@@ -33,14 +33,14 @@ class JiraPoinzBot extends PoinzBot {
   async handleCommand(command, story) {
     const [cmd, ...args] = command.split(' ');
 
-    if (cmd === 'loadIssue') {
+    if (cmd === 'loadIssue' || cmd === 'li') {
       for (const issueId of args) {
         const issue = await this.jira.findIssue(issueId);
         this.createTicketFromJiraIssue(issue);
       }
     }
 
-    if (cmd === 'loadJQL') {
+    if (cmd === 'loadJQL' ||  cmd === 'lj') {
       const jql = command.slice(cmd.length);
       const results = await this.jira.searchJira(jql);
       for (const issue of results.issues) {
@@ -70,7 +70,7 @@ class JiraPoinzBot extends PoinzBot {
   }
 
   async setJiraValue(storyId, value) {
-    const story = this.roomState.stories.find((s) => s.id === storyId);
+    const story = this.roomState.stories.find((s) => (s.id || s.storyId) === storyId);
     // If the title looks like a Jira Key (e.g., PROJ-123)
     console.log(story);
     if (story && JIRA_KEY_PATTERN.test(story.title)) {

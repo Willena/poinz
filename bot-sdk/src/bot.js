@@ -50,24 +50,29 @@ export class PoinzBot {
     this.lastEventTime = new Date();
     switch (event.name) {
       case 'kicked':
-        console.warn(`Kicked from room, no more event will be processed`,event);
+        console.warn(`Kicked from room, no more event will be processed`, event);
         return;
       case 'commandRejected':
-        console.error(`Command rejected`,event);
-        return
+        console.error(`Command rejected`, event);
+        return;
       case 'joinedRoom':
         this.userId = event.userId;
-        this.user = event.payload.users.find(u => u.id === this.userId);
+        this.user = event.payload.users.find((u) => u.id === this.userId);
         console.log(`Current user is`, this.user);
         this.roomState = event.payload;
         if (this.joinAsSpectator && !this.user.excluded) {
-          this.sendCommand('toggleExclude', { userId: this.userId });
+          this.sendCommand('toggleExclude', {userId: this.userId});
         }
         // this.ensureConfigTicket();
         break;
       case 'storyAdded':
         this.roomState.stories.push(event.payload);
         this.checkCommandTicket(event.payload);
+        break;
+      case 'storyDeleted':
+        this.roomState.stories = this.roomState.stories.filter(
+          (s) => (s.id || s.storyId) !== event.payload.storyId
+        );
         break;
     }
 
@@ -104,7 +109,7 @@ export class PoinzBot {
         });
       } else {
         this.sendCommand('trashStory', {storyId: story.storyId});
-        this.sendCommand('deleteStory', { storyId: story.storyId });
+        this.sendCommand('deleteStory', {storyId: story.storyId });
       }
     }
   }
