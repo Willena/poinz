@@ -7,9 +7,9 @@ WORKDIR /usr/src/poinz
 
 COPY package.json package-lock.json ./
 COPY client/package.json client/package-lock.json ./client/
-
-RUN cd client && npm ci
 COPY client/ ./client/
+COPY CHANGELOG.md .
+RUN cd client && npm ci
 
 RUN cd client && npm run build
 
