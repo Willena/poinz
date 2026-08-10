@@ -11,5 +11,5 @@
 export const USERNAME_REGEX = /^.{0,80}$/;
 export const EMAIL_REGEX = /^[-a-zA-Z0-9._@*]{0,245}$/;
 export const ROOM_ID_REGEX = /^[-a-z0-9_]*$/;
-export const STORY_TITLE_REGEX = /^.{0,100}$/;
-export const STORY_DESCRIPTION_MAX_LENGTH = 2000;
+export const STORY_TITLE_REGEX = /^.{0,1000}$/;
+export const STORY_DESCRIPTION_MAX_LENGTH = 20000;

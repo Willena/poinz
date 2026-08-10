@@ -18,12 +18,12 @@ const schema = {
             title: {
               type: 'string',
               minLength: 1,
-              maxLength: 100
+              maxLength: 1000
             },
             description: {
               type: 'string',
               minLength: 0,
-              maxLength: 2000
+              maxLength: 20000
             }
           },
           required: ['title'],

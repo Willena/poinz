@@ -63,12 +63,12 @@ Produces: **[storyAdded](#event-storyAdded)**, **[storySelected](#event-storySel
                         "title": {
                             "type": "string",
                             "minLength": 1,
-                            "maxLength": 100
+                            "maxLength": 1000
                         },
                         "description": {
                             "type": "string",
                             "minLength": 0,
-                            "maxLength": 2000
+                            "maxLength": 20000
                         }
                     },
                     "required": [
@@ -122,12 +122,12 @@ Produces: **[storyChanged](#event-storyChanged)**,
                         "title": {
                             "type": "string",
                             "minLength": 1,
-                            "maxLength": 100
+                            "maxLength": 1000
                         },
                         "description": {
                             "type": "string",
                             "minLength": 0,
-                            "maxLength": 2000
+                            "maxLength": 20000
                         }
                     },
                     "required": [
@@ -1333,35 +1333,62 @@ Produces: **[storySelected](#event-storySelected)**, **[storyTrashed](#event-sto
 
 ## Events
 
- * [storyAdded](#event-storyadded)
- * [storySelected](#event-storyselected)
- * [storyChanged](#event-storychanged)
- * [storyEstimateCleared](#event-storyestimatecleared)
- * [storyDeleted](#event-storydeleted)
- * [consensusAchieved](#event-consensusachieved)
- * [revealed](#event-revealed)
- * [storyEstimateGiven](#event-storyestimategiven)
- * [importFailed](#event-importfailed)
- * [storyTrashed](#event-storytrashed)
- * [avatarSet](#event-avatarset)
- * [emailSet](#event-emailset)
- * [excludedFromEstimations](#event-excludedfromestimations)
- * [joinedRoom](#event-joinedroom)
- * [roomCreated](#event-roomcreated)
- * [tokenIssued](#event-tokenissued)
- * [usernameSet](#event-usernameset)
- * [kicked](#event-kicked)
- * [connectionLost](#event-connectionlost)
- * [leftRoom](#event-leftroom)
- * [newEstimationRoundStarted](#event-newestimationroundstarted)
- * [storyRestored](#event-storyrestored)
- * [cardConfigSet](#event-cardconfigset)
- * [passwordCleared](#event-passwordcleared)
- * [passwordSet](#event-passwordset)
- * [roomConfigSet](#event-roomconfigset)
- * [sortOrderSet](#event-sortorderset)
- * [storyValueSet](#event-storyvalueset)
- * [includedInEstimations](#event-includedinestimations)
+- [Poinz Command and Event Docu](#poinz-command-and-event-docu)
+  - [Commands](#commands)
+    - [Command "addStory"](#command-addstory)
+    - [Command "changeStory"](#command-changestory)
+    - [Command "clearStoryEstimate"](#command-clearstoryestimate)
+    - [Command "deleteStory"](#command-deletestory)
+    - [Command "giveStoryEstimate"](#command-givestoryestimate)
+    - [Command "importStories"](#command-importstories)
+    - [Command "joinRoom"](#command-joinroom)
+    - [Command "kick"](#command-kick)
+    - [Command "leaveRoom"](#command-leaveroom)
+    - [Command "newEstimationRound"](#command-newestimationround)
+    - [Command "restoreStory"](#command-restorestory)
+    - [Command "reveal"](#command-reveal)
+    - [Command "selectStory"](#command-selectstory)
+    - [Command "setAvatar"](#command-setavatar)
+    - [Command "setCardConfig"](#command-setcardconfig)
+    - [Command "setEmail"](#command-setemail)
+    - [Command "setPassword"](#command-setpassword)
+    - [Command "setRoomConfig"](#command-setroomconfig)
+    - [Command "setSortOrder"](#command-setsortorder)
+    - [Command "setStoryValue"](#command-setstoryvalue)
+    - [Command "setUsername"](#command-setusername)
+    - [Command "settleEstimation"](#command-settleestimation)
+    - [Command "toggleExclude"](#command-toggleexclude)
+    - [Command "trashStory"](#command-trashstory)
+  - [Events](#events)
+    - [Event "storyAdded"](#event-storyadded)
+    - [Event "storySelected"](#event-storyselected)
+    - [Event "storyChanged"](#event-storychanged)
+    - [Event "storyEstimateCleared"](#event-storyestimatecleared)
+    - [Event "storyDeleted"](#event-storydeleted)
+    - [Event "consensusAchieved"](#event-consensusachieved)
+    - [Event "revealed"](#event-revealed)
+    - [Event "storyEstimateGiven"](#event-storyestimategiven)
+    - [Event "importFailed"](#event-importfailed)
+    - [Event "storyTrashed"](#event-storytrashed)
+    - [Event "avatarSet"](#event-avatarset)
+    - [Event "emailSet"](#event-emailset)
+    - [Event "excludedFromEstimations"](#event-excludedfromestimations)
+    - [Event "joinedRoom"](#event-joinedroom)
+    - [Event "roomCreated"](#event-roomcreated)
+    - [Event "tokenIssued"](#event-tokenissued)
+    - [Event "usernameSet"](#event-usernameset)
+    - [Event "kicked"](#event-kicked)
+    - [Event "connectionLost"](#event-connectionlost)
+    - [Event "leftRoom"](#event-leftroom)
+    - [Event "newEstimationRoundStarted"](#event-newestimationroundstarted)
+    - [Event "storyRestored"](#event-storyrestored)
+    - [Event "cardConfigSet"](#event-cardconfigset)
+    - [Event "passwordCleared"](#event-passwordcleared)
+    - [Event "passwordSet"](#event-passwordset)
+    - [Event "roomConfigSet"](#event-roomconfigset)
+    - [Event "sortOrderSet"](#event-sortorderset)
+    - [Event "storyValueSet"](#event-storyvalueset)
+    - [Event "includedInEstimations"](#event-includedinestimations)
 
 
 ### Event "storyAdded"

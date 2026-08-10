@@ -3,7 +3,7 @@ import initDb from './db.js';
 import {throwIfBulkWriteResultInvalid} from './migrationTestUtil.js';
 import {up} from '../../migrations/20201019113504-truncate-story-title.js';
 
-test('DBMIGRATION: truncate story title if longer than 100 chars (up)', async () => {
+test('DBMIGRATION: truncate story title if longer than 1000 chars (up)', async () => {
   const [db, roomz] = await initDb();
 
   const roomId = uuid();
@@ -23,7 +23,7 @@ test('DBMIGRATION: truncate story title if longer than 100 chars (up)', async ()
       },
       {
         id: uuid(),
-        title: '-'.repeat(101),
+        title: '-'.repeat(1001),
         description: 'untouched...'
       }
     ]
@@ -41,7 +41,7 @@ test('DBMIGRATION: truncate story title if longer than 100 chars (up)', async ()
   expect(room.stories.length).toBe(2);
   expect(room.stories[0]).toMatchObject(preRoom.stories[0]);
   expect(room.stories[1]).toMatchObject({
-    title: '-'.repeat(100),
+    title: '-'.repeat(1000),
     description: 'untouched...'
   });
 

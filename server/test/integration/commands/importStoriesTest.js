@@ -195,7 +195,7 @@ describe('csv file', () => {
 
     const stories = [
       ['ISSUE-1', 'first story', 'description'].join(','),
-      ['ISSUE-2', 'second story' + '-'.repeat(130), 'description' + '-'.repeat(2010)].join(',')
+      ['ISSUE-2', 'second story' + '-'.repeat(1030), 'description' + '-'.repeat(20010)].join(',')
     ];
     const base64data = Buffer.from('issue,title,descr\n' + stories.join('\n')).toString('base64');
     const dataUrl = 'data:text/csv;base64,' + base64data;
@@ -231,8 +231,8 @@ describe('csv file', () => {
       estimations: {}
     });
     expect(storyAddedEvent2.payload).toMatchObject({
-      title: 'ISSUE-2 second story' + '-'.repeat(100 - 20),
-      description: 'description' + '-'.repeat(2000 - 11),
+      title: 'ISSUE-2 second story' + '-'.repeat(1000 - 20),
+      description: 'description' + '-'.repeat(20000 - 11),
       estimations: {}
     });
     expect(storySelectedEvent.payload).toEqual({
