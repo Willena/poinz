@@ -116,7 +116,7 @@ describe('preconditions', () => {
     );
   });
 
-  test('Should fail, if story title is too long (more than 100 chars)', async () => {
+  test('Should fail, if story title is too long (more than 1000 chars)', async () => {
     const {processor, roomId, storyId, userIdOne} = await prepTwoUsersInOneRoomWithOneStory(
       'mySuperUser',
       'nice Story'
@@ -130,16 +130,16 @@ describe('preconditions', () => {
           name: 'changeStory',
           payload: {
             storyId,
-            title: 't'.repeat(101),
+            title: 't'.repeat(1001),
             description: 'kdjgk'
           }
         },
         userIdOne
       )
-    ).rejects.toThrow('String is too long (101 chars), maximum 100 in /payload/title');
+    ).rejects.toThrow('String is too long (101 chars), maximum 1000 in /payload/title');
   });
 
-  test('Should fail, if story description is too long (more than 2k chars)', async () => {
+  test('Should fail, if story description is too long (more than 20k chars)', async () => {
     const {processor, roomId, storyId, userIdOne} = await prepTwoUsersInOneRoomWithOneStory(
       'mySuperUser',
       'nice Story'
@@ -154,11 +154,11 @@ describe('preconditions', () => {
           payload: {
             storyId,
             title: 'test',
-            description: 't'.repeat(2001)
+            description: 't'.repeat(20001)
           }
         },
         userIdOne
       )
-    ).rejects.toThrow('String is too long (2001 chars), maximum 2000 in /payload/description');
+    ).rejects.toThrow('String is too long (20001 chars), maximum 20000 in /payload/description');
   });
 });

@@ -8,12 +8,12 @@ const storySchema = {
     title: {
       type: 'string',
       minLength: 1,
-      maxLength: 100
+      maxLength: 1000
     },
     description: {
       type: ['string', 'undefined', 'null'],
       minLength: 0,
-      maxLength: 2000
+      maxLength: 20000
     },
     key: {
       // This key is an optional field. It is set when importing from an external tool (e.g. Jira) via csv file. If the field is present in the csv file.

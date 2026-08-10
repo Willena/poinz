@@ -13,9 +13,9 @@ export async function up(db) {
       if (room.stories && Array.isArray(room.stories)) {
         let atLeastOneStoryModified = false;
         room.stories = room.stories.map((stry) => {
-          if (stry.title.length > 100) {
+          if (stry.title.length > 1000) {
             atLeastOneStoryModified = true;
-            stry.title = stry.title.substr(0, 100);
+            stry.title = stry.title.substr(0, 1000);
           }
           return stry;
         });

@@ -231,8 +231,8 @@ describe('csv file', () => {
       estimations: {}
     });
     expect(storyAddedEvent2.payload).toMatchObject({
-      title: 'ISSUE-2 second story' + '-'.repeat(100 - 20),
-      description: 'description' + '-'.repeat(2000 - 11),
+      title: 'ISSUE-2 second story' + '-'.repeat(1000 - 20),
+      description: 'description' + '-'.repeat(20000 - 11),
       estimations: {}
     });
     expect(storySelectedEvent.payload).toEqual({

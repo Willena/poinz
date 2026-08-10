@@ -7,9 +7,9 @@ const {parse: parseCsv} = papaparse;
 
 const LOGGER = getLogger('storyImportParserCsv');
 
-const STORY_TITLE_CHAR_LIMIT = 100;
+const STORY_TITLE_CHAR_LIMIT = 1000;
 const STORY_KEY_CHAR_LIMIT = 100;
-const STORY_DESCRIPTION_CHAR_LIMIT = 2000;
+const STORY_DESCRIPTION_CHAR_LIMIT = 20000;
 
 /**
  * parses the given data url (data:text/csv;base64,U3VtbWFyeSxJc3N1ZSBrZXksSXNzdW.......) containing a list of "issues" (e.g. from jira)
